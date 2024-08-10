@@ -12,11 +12,6 @@ class RnUaepassModule(reactContext: ReactApplicationContext) :
   override fun getName(): String {
     return NAME
   }
-
-  @ReactMethod
-  fun multiply(a: Double, b: Double, promise: Promise) {
-    promise.resolve(a * b)
-  }
   @ReactMethod
   fun isAppInstalled(packageName: String, successCallback: Callback, errorCallback: Callback) {
       try {

@@ -2,40 +2,20 @@ import React, { useEffect, useState } from "react";
 import { Alert, Linking, Modal, Platform, Pressable, Text } from "react-native";
 import { WebView } from "react-native-webview";
 import { NativeModules } from "react-native";
-const LINKING_ERROR =
-  `The package 'rn-uaepass' doesn't seem to be linked. Make sure: \n\n` +
-  Platform.select({ ios: "- You have run 'pod install'\n", default: "" }) +
-  "- You rebuilt the app after installing the package\n" +
-  "- You are not using Expo Go\n";
-const RnUaepass = NativeModules.RnUaepass
-  ? NativeModules.RnUaepass
-  : new Proxy(
-      {},
-      {
-        get() {
-          throw new Error(LINKING_ERROR);
-        },
-      }
-    );
-console.log(RnUaepass);
+const RnUaepass =
+  Platform.OS == "android" && NativeModules.RnUaepass
+    ? NativeModules.RnUaepass
+    : new Proxy(
+        {},
+        {
+          get() {
+            throw new Error(
+              "Error in the package 'rn-uaepass', please update or contact the developer :( "
+            );
+          },
+        }
+      );
 
-// RnUaepass.multiply(1, 2).then((res: number) => {
-//   console.log(res);
-// });
-
-// export const isAppInstalled = (packageName: string): Promise<boolean> => {
-//   return new Promise((resolve, reject) => {
-//     RNUAEPass.isAppInstalled(
-//       packageName,
-//       (result: boolean) => {
-//         resolve(result);
-//       },
-//       (error: any) => {
-//         reject(error);
-//       }
-//     );
-//   });
-// };
 type UAEPassProps = {
   state?: "staging" | "production";
   clientId: string;
@@ -58,57 +38,50 @@ const UAEPass: React.FC<UAEPassProps> = ({
 }) => {
   let [uri, setUri] = useState("");
   let [visible, setVisible] = useState(false);
-  function lunchAuthentication() {
-    if (!state)
+  async function lunchAuthentication() {
+    if (!state || (state !== "staging" && state !== "production")) {
       return Alert.alert(
+        "App State",
         "Please select your app state 'Staging or Production'"
       );
-    if (!clientId) return Alert.alert("Please set your clientId");
-    if (!redirectUri) return Alert.alert("Please set your redirectUri");
-    let authLink = `client_id=${clientId}&redirect_uri=${redirectUri}`;
-    switch (state) {
-      case "staging":
-        Linking.canOpenURL("uaepassstg://")
-          .then((supported: boolean) => {
-            if (supported)
-              setUri(
-                `https://stg-id.uaepass.ae/idshub/authorize?${authLink}&response_type=code&acr_values=urn%3Adigitalid%3Aauthentication%3Aflow%3Amobileondevice&scope=urn%3Auae%3Adigitalid%3Aprofile%3Ageneral&state=ShNP22hyl1jUU2RGjTRkpg%3D%3D`
-              );
-            else
-              setUri(
-                `https://stg-id.uaepass.ae/idshub/authorize?response_type=code&${authLink}&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&acr_values=urn:safelayer:tws:policies:authentication:level:low`
-              );
-          })
-          .catch(() => {
-            setUri(
-              `https://stg-id.uaepass.ae/idshub/authorize?response_type=code&${authLink}&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&acr_values=urn:safelayer:tws:policies:authentication:level:low`
-            );
-          });
-        break;
-      case "production":
-
-        // Linking.canOpenURL("uaepass://")
-        //   .then((supported: boolean) => {
-        //     console.log(supported);
-
-        //     if (supported)
-        //       setUri(
-        //         `https://id.uaepass.ae/idshub/authorize?${authLink}&response_type=code&acr_values=urn%3Adigitalid%3Aauthentication%3Aflow%3Amobileondevice&scope=urn%3Auae%3Adigitalid%3Aprofile%3Ageneral&state=ShNP22hyl1jUU2RGjTRkpg%3D%3D`
-        //       );
-        //     else {
-        //       setUri(
-        //         `https://id.uaepass.ae/idshub/authorize?response_type=code&${authLink}&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&acr_values=urn:safelayer:tws:policies:authentication:level:low`
-        //       );
-        //     }
-        //   })
-        //   .catch(() => {
-        //     setUri(
-        //       `https://id.uaepass.ae/idshub/authorize?response_type=code&${authLink}&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&acr_values=urn:safelayer:tws:policies:authentication:level:low`
-        //     );
-        //   });
-        break;
     }
-    setVisible(true);
+    if (!clientId) return Alert.alert("Client ID", "Please set your clientId");
+    if (!redirectUri)
+      return Alert.alert("Redirect URI", "Please set your redirectUri");
+    const authLink = `client_id=${clientId}&redirect_uri=${redirectUri}`;
+    const formattedAuthLink = {
+      staging: {
+        ios: "uaepassstg://",
+        android: "ae.uaepass.mainapp.stg",
+        installedLink: `https://stg-id.uaepass.ae/idshub/authorize?${authLink}&response_type=code&acr_values=urn%3Adigitalid%3Aauthentication%3Aflow%3Amobileondevice&scope=urn%3Auae%3Adigitalid%3Aprofile%3Ageneral&state=ShNP22hyl1jUU2RGjTRkpg%3D%3D`,
+        notInstalledLink: `https://stg-id.uaepass.ae/idshub/authorize?response_type=code&${authLink}&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&acr_values=urn:safelayer:tws:policies:authentication:level:low`,
+      },
+      production: {
+        ios: "uaepass://",
+        android: "ae.uaepass.mainapp",
+        installedLink: `https://id.uaepass.ae/idshub/authorize?${authLink}&response_type=code&acr_values=urn%3Adigitalid%3Aauthentication%3Aflow%3Amobileondevice&scope=urn%3Auae%3Adigitalid%3Aprofile%3Ageneral&state=ShNP22hyl1jUU2RGjTRkpg%3D%3D`,
+        notInstalledLink: `https://id.uaepass.ae/idshub/authorize?response_type=code&${authLink}&scope=urn:uae:digitalid:profile:general&state=HnlHOJTkTb66Y5H&acr_values=urn:safelayer:tws:policies:authentication:level:low`,
+      },
+    };
+    try {
+      let isInstalled;
+      if (Platform.OS === "ios") {
+        isInstalled = await Linking.canOpenURL(formattedAuthLink[state].ios);
+      } else if (Platform.OS === "android") {
+        isInstalled = await RnUaepass.isAppInstalled(
+          formattedAuthLink[state].android
+        );
+      }
+      setUri(
+        isInstalled
+          ? formattedAuthLink[state].installedLink
+          : formattedAuthLink[state].notInstalledLink
+      );
+    } catch (error) {
+      setUri(formattedAuthLink[state].notInstalledLink);
+    } finally {
+      setVisible(true);
+    }
   }
   const onShouldStartLoadWithRequest = (nativeEvent: any): boolean => {
     let { url } = nativeEvent;

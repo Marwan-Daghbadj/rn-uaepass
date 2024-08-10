@@ -1,4 +1,4 @@
-# rn-uaepass (🚫 Under Development 🚫)
+# rn-uaepass
 
 ## 🚫Note : Please note that all the steps are important.
 
@@ -19,6 +19,30 @@ cd ios && pod install
 
 ### 1. Configure Deep Linking
 
+You'll need to link RCTLinking to your project by following the steps described here. To be able to listen to incoming app links, you'll need to add the following lines to AppDelegate.m in your project:
+```javascript
+// Add the header at the top of the file:
+#import <React/RCTLinkingManager.h>
+
+// Add this inside `@implementation AppDelegate` above `@end`:
+- (BOOL)application:(UIApplication *)application
+   openURL:(NSURL *)url
+   options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RCTLinkingManager application:application openURL:url options:options];
+}
+```
+If your app is using Universal Links, you'll need to add the following code as well:
+```javascript
+// Add this inside `@implementation AppDelegate` above `@end`:
+- (BOOL)application:(UIApplication *)application continueUserActivity:(nonnull NSUserActivity *)userActivity
+ restorationHandler:(nonnull void (^)(NSArray<id<UIUserActivityRestoring>> * _Nullable))restorationHandler
+{
+ return [RCTLinkingManager application:application
+                  continueUserActivity:userActivity
+                    restorationHandler:restorationHandler];
+}
+```
 Follow <a href="https://reactnavigation.org/docs/deep-linking/#setup-on-ios" target="_blank">React Navigation Deep Linking Guide</a>
 
 ### 2. Update `Info.plist`
@@ -50,15 +74,28 @@ Next, add your app’s deep linking scheme:
 
 ## Android Setup
 
-### . Update `AndroidManifest.xml`
+### Update `AndroidManifest.xml`
 
 ```xml
-<intent-filter android:label="@string/app_name" android:autoVerify="true">
-  <action android:name="android.intent.action.VIEW" />
-  <category android:name="android.intent.category.DEFAULT" />
-  <category android:name="android.intent.category.BROWSABLE" />
-  <data android:scheme="your_app_scheme" />
-</intent-filter>
+<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+<application ...>
+  <activity ...>
+    //other intents
+    //app_scheme start
+    <intent-filter android:label="@string/app_name" android:autoVerify="true">
+      <action android:name="android.intent.action.VIEW" />
+      <category android:name="android.intent.category.DEFAULT" />
+      <category android:name="android.intent.category.BROWSABLE" />
+      <data android:scheme="your_app_scheme" />
+    </intent-filter>
+  //app_scheme end
+  </activity>
+</application>
+<queries>
+  <package android:name="ae.uaepass.mainapp" />
+  <package android:name="ae.uaepass.mainapp.stg" />
+</queries>
 ```
 
 Replace `your_app_scheme` with your actual your app scheme registered with UAEPass Service.
@@ -149,7 +186,9 @@ https://id.uaepass.ae/idshub/userinfo
 
 <a href="https://docs.uaepass.ae/guides/authentication/web-application" target="_blank">Follow the UAEPass Doc for more information</a>
 
+## Disclaimer:
+This project is not affiliated with or endorsed by UAE Pass or the government of the United Arab Emirates. It is an independent open-source project created for the purpose of integrating UAE Pass functionality into React Native applications.
 
-## Contact
+## Author
 
 Reach me at <a href="https://www.mar1-dev.com/" target="_blank">https://www.mar1-dev.com/</a>
