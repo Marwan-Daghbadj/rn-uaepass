@@ -1,0 +1,37 @@
+{
+  "name": "rn-uaepass",
+  "version": "0.0.0",
+  "description": "Login and Sign up using UAEPass authentication",
+  "main": "index.tsx",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Marwan-Daghbadj/rn-uaepass.git"
+  },
+  "keywords": [
+    "uaepass",
+    "uae",
+    "dubai",
+    "abu dhabi",
+    "united arab emirates",
+    "login",
+    "google",
+    "apple id",
+    "sign up",
+    "react",
+    "react-native",
+    "react native",
+    "react-native-uaepass"
+  ],
+  "author": "Daghbadj Marwan <daghbadjmarwan@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Marwan-Daghbadj/rn-uaepass/issues"
+  },
+  "homepage": "https://github.com/Marwan-Daghbadj/rn-uaepass#readme",
+  "peerDependencies": {
+    "react-native-webview": "*"
+  }
+}
