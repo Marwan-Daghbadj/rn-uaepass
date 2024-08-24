@@ -1,4 +1,4 @@
-package com.rnuaepass
+package com.rn.uaepass
 
 import com.facebook.react.ReactPackage
 import com.facebook.react.bridge.NativeModule

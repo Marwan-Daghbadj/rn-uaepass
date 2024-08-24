@@ -1,5 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { Alert, Linking, Modal, Platform, Pressable, Text } from "react-native";
+import {
+  Alert,
+  Linking,
+  Modal,
+  Platform,
+  Pressable,
+  Text,
+  View,
+} from "react-native";
 import { WebView } from "react-native-webview";
 import { NativeModules } from "react-native";
 const RnUaepass =
@@ -169,13 +177,47 @@ const UAEPass: React.FC<UAEPassProps> = ({
               position: "absolute",
               top: 5,
               right: 5,
-              paddingVertical: 10,
-              paddingHorizontal: 15,
+              padding: 10,
               zIndex: 1,
+              backgroundColor: "white",
+              width: 50,
+              aspectRatio: 1,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              borderRadius: 100,
             }}
-            onPress={(_) => setVisible(false)}
+            onPress={(_) => {
+              setVisible(false);
+              onCancel();
+            }}
           >
-            <Text style={{ fontSize: 30, fontWeight: "bold" }}>X</Text>
+            <View
+              style={{
+                position: "absolute",
+                height: 3,
+                width: 30,
+                backgroundColor: "black",
+                transform: [
+                  {
+                    rotate: "45deg",
+                  },
+                ],
+              }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                height: 3,
+                width: 30,
+                backgroundColor: "black",
+                transform: [
+                  {
+                    rotate: "-45deg",
+                  },
+                ],
+              }}
+            />
           </Pressable>
         )}
         <WebView

@@ -15,6 +15,10 @@ npm install react-native-webview rn-uaepass
 cd ios && pod install
 ```
 
+## 🚫Before you start
+
+Make sure you have installed both the Production and Staging apps of UAEPass. You can download them from <a href="https://docs.uaepass.ae/resources/staging-apps">https://docs.uaepass.ae/resources/staging-apps</a>
+
 ## iOS Setup
 
 ### 1. Configure Deep Linking
