@@ -196,3 +196,6 @@ This project is not affiliated with or endorsed by UAE Pass or the government of
 ## Author
 
 Reach me at <a href="https://www.mar1-dev.com/" target="_blank">https://www.mar1-dev.com/</a>
+
+## Issues
+Tell us more about your issue <a href="https://github.com/Marwan-Daghbadj/rn-uaepass/issues/1">here</a>
