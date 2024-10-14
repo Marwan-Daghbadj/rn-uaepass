@@ -81,8 +81,6 @@ Next, add your app’s deep linking scheme:
 ### Update `AndroidManifest.xml`
 
 ```xml
-<uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-
 <application ...>
   <activity ...>
     //other intents
@@ -96,10 +94,6 @@ Next, add your app’s deep linking scheme:
   //app_scheme end
   </activity>
 </application>
-<queries>
-  <package android:name="ae.uaepass.mainapp" />
-  <package android:name="ae.uaepass.mainapp.stg" />
-</queries>
 ```
 
 Replace `your_app_scheme` with your actual your app scheme registered with UAEPass Service.
