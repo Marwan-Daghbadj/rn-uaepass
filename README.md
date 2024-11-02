@@ -143,9 +143,10 @@ const styles = {
 
 ## Get Access Token from Code
 ```javascript
+let basicAuthorization=btoa(`${client_id}:${password}`)
 const myHeaders = new Headers();
 myHeaders.append("Content-Type", "multipart/form-data");
-myHeaders.append("Authorization", `Basic ${password}`);
+myHeaders.append("Authorization", `Basic ${basicAuthorization}`);
 
 const requestOptions = {
   method: "POST",
