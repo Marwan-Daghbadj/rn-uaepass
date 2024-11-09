@@ -140,6 +140,59 @@ const styles = {
 };
 
 ```
+## Usage Example with Ref
+
+```javascript
+import UAEPass from "rn-uaepass";
+import React, {useRef} from 'react';
+import { Text, Alert, Pressable } from "react-native";
+
+
+
+let uaePassRef = useRef();
+
+
+
+<Pressable 
+  onPress={_ => {
+   uaePassRef.current?.launchAuthentication();
+   }}
+  style={styles.container}>
+    <Text style={styles.text}>Login with UAEPass!</Text>
+</Pressable>
+
+
+<UAEPass
+  ref={uaePassRef}
+  state="production"
+  clientId="your_client_id" // Must be registered in the UAEPass service
+  redirectUri="your_app_scheme" // Must be registered in the UAEPass service
+  showCloseBtn={true}
+  onCode={(code) => {
+    Alert.alert("Code", code);
+  }}
+  onCancel={() => {
+    Alert.alert("Cancel", "User cancelled authentication");
+  }}
+  onError={(error) => {
+    Alert.alert("Error", error);
+  }}
+>
+</UAEPass>
+
+const styles = {
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  text: {
+    fontSize: 18,
+    color: "#000",
+  },
+};
+
+```
 
 ## Get Access Token from Code
 ```javascript
