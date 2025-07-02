@@ -1,6 +1,5 @@
 import React, {
   forwardRef,
-  useCallback,
   useEffect,
   useImperativeHandle,
   useState,
@@ -11,7 +10,6 @@ import {
   Modal,
   Platform,
   Pressable,
-  Text,
   View,
 } from "react-native";
 import { WebView } from "react-native-webview";
@@ -30,6 +28,11 @@ const RnUaepass =
         }
       );
 
+
+export type UAEPassRef = {
+  lunchAuthentication: () => void;
+};
+
 type UAEPassProps = {
   state?: "staging" | "production";
   clientId: string;
@@ -40,7 +43,7 @@ type UAEPassProps = {
   onCancel: () => void;
   onError: (error: any) => void;
 };
-const UAEPass = forwardRef(
+const UAEPass = forwardRef<UAEPassRef, UAEPassProps>(
   (
     {
       state,
@@ -51,16 +54,17 @@ const UAEPass = forwardRef(
       onCode,
       onCancel,
       onError,
-    }: UAEPassProps,
+    },
     ref
   ) => {
     let [uri, setUri] = useState("");
     let [visible, setVisible] = useState(false);
 
     useImperativeHandle(ref, () => ({
-      launchAuthentication,
+      lunchAuthentication: lunchAuthentication,
     }));
-    async function launchAuthentication() {
+
+    async function lunchAuthentication() {
       if (!state || (state !== "staging" && state !== "production")) {
         return Alert.alert(
           "App State",
@@ -179,7 +183,7 @@ const UAEPass = forwardRef(
     }, []);
     return (
       <React.Fragment>
-        <Pressable onPress={launchAuthentication}>{children}</Pressable>
+        <Pressable onPress={lunchAuthentication}>{children}</Pressable>
         <Modal
           visible={visible}
           presentationStyle="pageSheet"
@@ -252,6 +256,6 @@ const UAEPass = forwardRef(
       </React.Fragment>
     );
   }
-);
+});
 
 export default UAEPass;

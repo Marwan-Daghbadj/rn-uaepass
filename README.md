@@ -154,8 +154,8 @@ let uaePassRef = useRef();
 
 
 <Pressable 
-  onPress={_ => {
-   uaePassRef.current?.launchAuthentication();
+lunchAuthentication  onPress={_ => {
+   uaePassRef.current?.lunchAuthentication();
    }}
   style={styles.container}>
     <Text style={styles.text}>Login with UAEPass!</Text>
