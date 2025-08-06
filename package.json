@@ -1,6 +1,6 @@
 {
   "name": "rn-uaepass",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "Login and Sign up using UAEPass authentication",
   "main": "index.tsx",
   "scripts": {
