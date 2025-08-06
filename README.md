@@ -233,11 +233,12 @@ https://id.uaepass.ae/idshub/token
 https://id.uaepass.ae/idshub/userinfo
 ```
 
+## Useful remarks:
+When submitting your request to the UAEPASS authorities, make sure your redirect url is like this : your_app_scheme://uaepass
 
 <a href="https://docs.uaepass.ae/guides/authentication/web-application" target="_blank">Follow the UAEPass Doc for more information</a>
 
-## Useful remarks:
-When submitting your request to the UAEPASS authorities, make sure your redirect url is like this : your_app_scheme://uaepass
+
 
 ## Disclaimer:
 This project is not affiliated with or endorsed by UAE Pass or the government of the United Arab Emirates. It is an independent open-source project created for the purpose of integrating UAE Pass functionality into React Native applications.
