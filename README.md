@@ -231,7 +231,7 @@ fetch("https://stg-id.uaepass.ae/idshub/userinfo", requestOptions)
   .then((result) => console.log('user details', result))
   .catch((error) => console.error(error));
 ```
-## Log out
+## Log out (Works only in android)
 ```javascript
 try {
   fetch(`https://stg-id.uaepass.ae/idshub/logout?redirect_uri=${your_App_redirect_uri}`);
