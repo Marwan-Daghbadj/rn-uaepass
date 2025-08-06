@@ -94,7 +94,12 @@ Next, add your app’s deep linking scheme:
   //app_scheme end
   </activity>
 </application>
+<queries>
+  <package android:name="ae.uaepass.mainapp" />
+  <package android:name="ae.uaepass.mainapp.stg" />
+</queries>
 ```
+
 
 Replace `your_app_scheme` with your actual your app scheme registered with UAEPass Service.
 
@@ -226,11 +231,20 @@ fetch("https://stg-id.uaepass.ae/idshub/userinfo", requestOptions)
   .then((result) => console.log('user details', result))
   .catch((error) => console.error(error));
 ```
+## Log out
+```javascript
+try {
+  fetch(`https://stg-id.uaepass.ae/idshub/logout?redirect_uri=${your_App_redirect_uri}`);
+} catch (error) {
+  console.error("Unexpected error during logout fetch:", error);
+}
+```
 
-### Production links
+## Production links
 ```bash
 https://id.uaepass.ae/idshub/token
 https://id.uaepass.ae/idshub/userinfo
+https://id.uaepass.ae/idshub/logout
 ```
 
 ## Useful remarks:
