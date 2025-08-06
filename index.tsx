@@ -4,14 +4,7 @@ import React, {
   useImperativeHandle,
   useState,
 } from "react";
-import {
-  Alert,
-  Linking,
-  Modal,
-  Platform,
-  Pressable,
-  View,
-} from "react-native";
+import { Alert, Linking, Modal, Platform, Pressable, View } from "react-native";
 import { WebView } from "react-native-webview";
 import { NativeModules } from "react-native";
 const RnUaepass =
@@ -27,7 +20,6 @@ const RnUaepass =
           },
         }
       );
-
 
 export type UAEPassRef = {
   lunchAuthentication: () => void;
@@ -256,6 +248,6 @@ const UAEPass = forwardRef<UAEPassRef, UAEPassProps>(
       </React.Fragment>
     );
   }
-});
+);
 
 export default UAEPass;
