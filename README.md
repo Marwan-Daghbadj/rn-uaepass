@@ -236,8 +236,8 @@ https://id.uaepass.ae/idshub/userinfo
 ## Useful remarks:
 When submitting your request to the UAEPASS authorities, make sure your redirect url is like this : your_app_scheme://uaepass
 
+## Official Docs:
 <a href="https://docs.uaepass.ae/guides/authentication/web-application" target="_blank">Follow the UAEPass Doc for more information</a>
-
 
 
 ## Disclaimer:
