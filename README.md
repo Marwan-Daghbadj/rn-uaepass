@@ -98,8 +98,6 @@ Next, add your app’s deep linking scheme:
 
 Replace `your_app_scheme` with your actual your app scheme registered with UAEPass Service.
 
-For better use `your_app_scheme://uaepass` this way the package will handle only the uaepass authentication.
-
 
 ## Usage Example
 
@@ -238,11 +236,13 @@ https://id.uaepass.ae/idshub/userinfo
 
 <a href="https://docs.uaepass.ae/guides/authentication/web-application" target="_blank">Follow the UAEPass Doc for more information</a>
 
+## Useful remarks:
+When submitting your request to the UAEPASS authorities, make sure your redirect url is like this : your_app_scheme://uaepass
+
 ## Disclaimer:
 This project is not affiliated with or endorsed by UAE Pass or the government of the United Arab Emirates. It is an independent open-source project created for the purpose of integrating UAE Pass functionality into React Native applications.
 
 ## Author
-
 Reach me at <a href="https://www.mar1-dev.com/" target="_blank">https://www.mar1-dev.com/</a>
 
 ## Issues
